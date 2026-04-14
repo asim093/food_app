@@ -1,3 +1,5 @@
+import cn from 'clsx';
+import { Fragment } from 'react';
 import {
     FlatList,
     Image,
@@ -7,10 +9,8 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import { images, offers } from "../../constants";
-import { Fragment } from "react";
-import cn from 'clsx';
 import CartButton from "../../components/CartButton";
+import { images, offers } from "../../constants";
 
 export default function App() {
     return (
@@ -24,42 +24,43 @@ export default function App() {
                         <View className="mb-4">
                             <Pressable
                                 className={cn(
-                                    "h-32 rounded-xl p-4 mb-2",
+                                    "offer-card ",
                                     isEven ? "flex-row-reverse" : "flex-row"
                                 )}
                                 style={{ backgroundColor: item.color }}
                                 android_ripple={{ color: "#ffffff22" }}
                             >
-                                <View className="h-full w-1/2">
-                                    <Image
-                                        source={item.image}
-                                        className="w-full h-full"
-                                        resizeMode="contain"
-                                    />
-                                </View>
+                                {({ pressed }) => (
+                                    <Fragment>
+                                        <View className="h-full w-1/2 ">
+                                            <Image
+                                                source={item.image}
+                                                className={"size-full"}
+                                                resizeMode={"cover"}
+                                            />
+                                        </View>
 
-                                <View className={cn(
-                                    "flex-1 justify-between items-start",
-                                    isEven ? "pl-5" : "pr-4"
-                                )}>
-                                    <Text className="text-2xl font-bold text-white leading-7">
-                                        {item.title}
-                                    </Text>
-                                    <Image
-                                        source={images.arrowRight}
-                                        className="w-10 h-10"
-                                        resizeMode="contain"
-                                        style={{ tintColor: "#ffffff" }}
-                                    />
-                                </View>
+                                        <View className={cn(
+                                            "offer-card__info ",
+                                            isEven ? "pl-10" : "pr-10"
+                                        )}>
+                                            <Text className="h3-bold text-white leading-tight">
+                                                {item.title}
+                                            </Text>
+                                            <Image
+                                                source={images.arrowRight}
+                                                className="size-10"
+                                                resizeMode="contain"
+                                                style={{ tintColor: "#ffffff" }}
+                                            />
+                                        </View>
+                                    </Fragment>
+                                )}
                             </Pressable>
                         </View>
                     );
                 }}
-                contentContainerStyle={{
-                    paddingBottom: 112, // pb-28
-                    paddingHorizontal: 16, // px-4
-                }}
+                contentContainerClassName="pb-28 px-5"
                 ListHeaderComponent={() => (
                     <View className="flex-row justify-between items-center w-full my-5 pt-2">
                         <View className="items-start">
